@@ -22,7 +22,7 @@ $ ln -s shared/Nobel-Laureate-Data-Conversion/ www
 ```
 Then go to [http://localhost:8888/laureate.php](http://localhost:8888/laureate.php) on your local machine to view the JSON output from the API.
 
-# Pretext
+## Pretext
 
 The JSON schema that will be converted to relational table format is as follows:
 ```
