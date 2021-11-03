@@ -17,7 +17,7 @@ In your container, git clone this repository into your shared directory, then re
 $ cd ~/shared/
 $ git clone https://github.com/ajpfahnl/Nobel-Laureate-Data-Conversion.git
 $ cd ../
-$ rm -rf www/
+$ rm -rf www
 $ ln -s shared/Nobel-Laureate-Data-Conversion/ www
 ```
 Then go to [http://localhost:8888/laureate.php](http://localhost:8888/laureate.php) on your local machine to view the JSON output from the API.
