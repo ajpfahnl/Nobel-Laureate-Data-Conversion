@@ -25,7 +25,7 @@ CREATE TABLE BirthFounded(
 
 CREATE TABLE NobelPrize(
     id INT, 
-    awardYear VARCHAR(4), 
+    awardYear INT, 
     category VARCHAR(25), 
     sortOrder INT, 
     PRIMARY KEY(id)
