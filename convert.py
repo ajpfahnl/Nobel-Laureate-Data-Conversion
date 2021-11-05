@@ -1,4 +1,5 @@
 import json
+from os import write
 
 '''
 # load data
@@ -15,39 +16,95 @@ print(id + "\t" + givenName + "\t" + familyName)
 '''
 
 ##############################################################
+DEBUG = False
+NULL = '\\N'
+
+def printd(s):
+    if DEBUG:
+        print(s)
 
 # load data
 data = json.load(open("./data/nobel-laureates.json", "r"))
-laureate = data["laureates"]
+laureates = data["laureates"]
 
-for i in laureate:
+# create del files
+d_people = {}
+d_birthfounded = {}
+d_org = {}
+d_aff = {}
+d_nobelprize = {}
+
+for laureate in laureates:
     id = laureate["id"]
 
-    givenName = laureate["givenName"]["en"]
-    familyName = laureate["familyName"]["en"]
-    gender = laureate["gender"]
+    person = True if "givenName" in laureate else False
 
-    org = laureate["orgName"]["en"]
+    # People and Org tables
+    if person:
+        givenName = laureate["givenName"]["en"]
+        familyName = laureate["familyName"]["en"] if "familyName" in laureate else NULL
+        gender = laureate["gender"]
+        printd(f"{givenName} {familyName}")
+        d_people[id] = (id, givenName, familyName, gender)
+    else:
+        org = laureate["orgName"]["en"]
+        printd(org)
+        d_org[id] = org
 
-    birth_date = laureate["birth"]["date"]
-    birth_place = laureate["birth"]["place"]
-    birth_place_city = birth_place["city"]["en"]
-    birth_place_country = birth_place["country"]["en"]
+    # Birth/Founding table
+    if person:
+        if "birthCountry" in laureate:
+            printd("\tbirth country only")
+            date = NULL
+            place = NULL
+            place_city = NULL
+            place_country = laureate['birthCountry']['en']
+        else:
+            date = laureate["birth"]["date"]
+            place = laureate["birth"]["place"]
+            place_city = place["city"]["en"] if "city" in place else NULL
+            place_country = place["country"]["en"] if "country" in place else NULL
 
-    # organization founding
-    founded_date = laureate["founded"]["date"]
-    founded_place = laureate["founded"]["place"]
-    founded_place_city = founded_place["city"]["en"]
-    founded_place_country = founded_place["country"]["en"]
+    else:
+        # organization founding
+        if "founded" not in laureate:
+            printd('\tno founding')
+            date = NULL
+            place = NULL
+            place_city = NULL
+            place_country = NULL
+        else:
+            date = laureate["founded"]["date"]
+            place = laureate["founded"]["place"]
+            place_city = place["city"]["en"] if "city" in place else NULL
+            place_country = place["country"]["en"] if "country" in place else NULL
 
-    # nobel prize
-    nobel_prize = laureate["nobelPrizes"]
-    award_year = nobel_prize["awardYear"]
-    category = nobel_prize["category"]["en"]
-    sort_order = nobel_prize["sortOrder"]
+    d_birthfounded[id] = (id, date, place_city, place_country)
 
-    # people with affiliations
-    affiliations = nobel_prize["affiliations"]
-    aff_name = affiliations["name"]["en"]
-    aff_city = affiliations["city"]["en"]
-    aff_country = affiliations["country"]["en"]
+    # nobel prize table
+    for nobel_prize in laureate["nobelPrizes"]:  
+        award_year = nobel_prize["awardYear"]
+        category = nobel_prize["category"]["en"]
+        sort_order = nobel_prize["sortOrder"]
+
+        d_nobelprize[id] = (id, award_year, category, sort_order)
+
+        # Affiliations table
+        if person and "affiliations" in nobel_prize:
+            for affiliation in nobel_prize["affiliations"]:
+                aff_name = affiliation["name"]["en"] 
+                aff_city = affiliation["city"]["en"] if "city" in affiliation else NULL
+                aff_country = affiliation["country"]["en"] if "country" in affiliation else NULL
+
+                d_aff[id] = (id, aff_name, aff_city, aff_country)
+
+def write_d2f(filename, d):
+    with open(filename, 'w') as f:
+        for tup in d.values():
+            f.write(';'.join(tup) + '\n')
+
+write_d2f("./People.del", d_people)
+write_d2f("./BirthFounded.del", d_birthfounded)
+write_d2f("./Org.del", d_org)
+write_d2f("./Affiliations.del", d_aff)
+write_d2f("./NobelPrize.del", d_nobelprize)
