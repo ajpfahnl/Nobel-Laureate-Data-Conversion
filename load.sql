@@ -19,7 +19,6 @@ CREATE TABLE Organization(
 CREATE TABLE BirthFounded(
     id INT, 
     birth_found DATE, 
-    place VARCHAR(5), 
     city VARCHAR(30), 
     country VARCHAR(30), 
     PRIMARY KEY(id)
