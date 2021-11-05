@@ -49,7 +49,7 @@ for laureate in laureates:
     else:
         org = laureate["orgName"]["en"]
         printd(org)
-        d_org[id] = org
+        d_org[id] = (id, org)
 
     # Birth/Founding table
     if person:
