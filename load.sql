@@ -1,5 +1,7 @@
--- Creating Tables
+-- Drop tables if they exist
+DROP TABLE IF EXISTS People, Organization, BirthFounded, NobelPrize, Affiliations;
 
+-- Creating tables
 CREATE TABLE People(
     id INT, 
     givenName VARCHAR(50), 
@@ -39,4 +41,18 @@ CREATE TABLE Affiliations(
     PRIMARY KEY(id)
 );
 
--- Load
+-- Load files
+LOAD DATA LOCAL INFILE './people.del' INTO TABLE People
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
+
+LOAD DATA LOCAL INFILE './organization.del' INTO TABLE Organization
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
+
+LOAD DATA LOCAL INFILE './birth-founded.del' INTO TABLE BirthFounded
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
+
+LOAD DATA LOCAL INFILE './nobel-prize.del' INTO TABLE NobelPrize
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
+
+LOAD DATA LOCAL INFILE './affiliations.del' INTO TABLE Affiliations
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
