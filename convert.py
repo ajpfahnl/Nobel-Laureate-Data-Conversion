@@ -87,7 +87,7 @@ for laureate in laureates:
         category = nobel_prize["category"]["en"]
         sort_order = nobel_prize["sortOrder"]
 
-        d_nobelprize[id] = (id, award_year, category, sort_order)
+        d_nobelprize[id+award_year] = (id, award_year, category, sort_order)
 
         # Affiliations table
         if person and "affiliations" in nobel_prize:
@@ -96,7 +96,7 @@ for laureate in laureates:
                 aff_city = affiliation["city"]["en"] if "city" in affiliation else NULL
                 aff_country = affiliation["country"]["en"] if "country" in affiliation else NULL
 
-                d_aff[id] = (id, aff_name, aff_city, aff_country)
+                d_aff[id+aff_name] = (id, aff_name, aff_city, aff_country)
 
 def write_d2f(filename, d):
     with open(filename, 'w') as f:
