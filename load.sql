@@ -29,7 +29,7 @@ CREATE TABLE NobelPrize(
     awardYear INT, 
     category VARCHAR(25), 
     sortOrder INT, 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id, awardYear)
 );
 
 CREATE TABLE Affiliations(
@@ -37,7 +37,7 @@ CREATE TABLE Affiliations(
     name VARCHAR(100), 
     city VARCHAR(30), 
     country VARCHAR(30), 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id, name)
 );
 
 -- Load files
