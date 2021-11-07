@@ -74,7 +74,6 @@ if ($result->num_rows > 0) {
     }
 }
 if (count($birthFound) > 0) {
-    echo $person;
     if ($person == "yes") {
         $output["birth"] = $birthFound;
     } else {
