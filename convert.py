@@ -24,7 +24,7 @@ def printd(s):
         print(s)
 
 # load data
-data = json.load(open("./data/nobel-laureates.json", "r"))
+data = json.load(open("/home/cs143/data/nobel-laureates.json", "r"))
 laureates = data["laureates"]
 
 # create del files
