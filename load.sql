@@ -27,10 +27,11 @@ CREATE TABLE BirthFounded(
 );
 
 CREATE TABLE NobelPrize(
-    id INT, 
+    id INT,
     awardYear INT, 
     category VARCHAR(25), 
     sortOrder INT, 
+    npid INT,
     PRIMARY KEY(id, awardYear)
 );
 
@@ -39,7 +40,8 @@ CREATE TABLE Affiliations(
     name VARCHAR(100), 
     city VARCHAR(30), 
     country VARCHAR(30), 
-    PRIMARY KEY(id, name)
+    npid INT,
+    PRIMARY KEY(id, name, npid)
 );
 
 -- Load files

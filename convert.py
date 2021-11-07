@@ -34,6 +34,8 @@ d_org = {}
 d_aff = {}
 d_nobelprize = {}
 
+npid = 0
+
 for laureate in laureates:
     id = laureate["id"]
 
@@ -90,12 +92,13 @@ for laureate in laureates:
     d_birthfounded[id] = (id, date, place_city, place_country)
 
     # nobel prize table
-    for nobel_prize in laureate["nobelPrizes"]:  
+    for nobel_prize in laureate["nobelPrizes"]:
+        npid += 1
         award_year = nobel_prize["awardYear"]
         category = nobel_prize["category"]["en"]
         sort_order = nobel_prize["sortOrder"]
 
-        d_nobelprize[id+award_year] = (id, award_year, category, sort_order)
+        d_nobelprize[id+award_year] = (id, award_year, category, sort_order, str(npid))
 
         # Affiliations table
         if person and "affiliations" in nobel_prize:
@@ -104,7 +107,9 @@ for laureate in laureates:
                 aff_city = affiliation["city"]["en"] if "city" in affiliation else NULL
                 aff_country = affiliation["country"]["en"] if "country" in affiliation else NULL
 
-                d_aff[id+aff_name] = (id, aff_name, aff_city, aff_country)
+                # d_aff[id+aff_name] = (id, aff_name, aff_city, aff_country)
+                d_aff[id+aff_name+str(npid)] = (id, aff_name, aff_city, aff_country, str(npid))
+
 
 def write_d2f(filename, d):
     with open(filename, 'w') as f:
