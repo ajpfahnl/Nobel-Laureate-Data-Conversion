@@ -7,13 +7,15 @@ CREATE TABLE People(
     givenName VARCHAR(50), 
     familyName VARCHAR(50), 
     gender VARCHAR(10), 
-    PRIMARY KEY(id)
+    awardYear INT,
+    PRIMARY KEY(id, awardYear)
 );
 
 CREATE TABLE Organization(
     id INT, 
     orgName VARCHAR(80), 
-    PRIMARY KEY(id)
+    awardYear INT,
+    PRIMARY KEY(id, awardYear)
 );
 
 CREATE TABLE BirthFounded(
