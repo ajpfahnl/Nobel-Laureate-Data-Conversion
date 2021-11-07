@@ -44,12 +44,20 @@ for laureate in laureates:
         givenName = laureate["givenName"]["en"]
         familyName = laureate["familyName"]["en"] if "familyName" in laureate else NULL
         gender = laureate["gender"]
-        printd(f"{givenName} {familyName}")
-        d_people[id] = (id, givenName, familyName, gender)
+
+        for nobel_prize in laureate["nobelPrizes"]:  
+            p_award_year = nobel_prize["awardYear"]
+
+            printd(f"{givenName} {familyName}")
+            d_people[id+p_award_year] = (id, givenName, familyName, gender, p_award_year)
     else:
         org = laureate["orgName"]["en"]
-        printd(org)
-        d_org[id] = (id, org)
+
+        for nobel_prize in laureate["nobelPrizes"]:  
+            o_award_year = nobel_prize["awardYear"]
+
+            printd(org)
+            d_org[id+o_award_year] = (id, org, o_award_year)
 
     # Birth/Founding table
     if person:
