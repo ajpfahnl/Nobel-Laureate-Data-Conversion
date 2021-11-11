@@ -20,6 +20,9 @@ $ cd ../
 $ rm -rf www
 $ ln -s shared/Nobel-Laureate-Data-Conversion/ www
 ```
+
+Additionally, ensure that the `nobel-laureates.json` file is stored in `/home/cs143/data/nobel-laureates.json`.
+
 Then go to [http://localhost:8888/laureate.php](http://localhost:8888/laureate.php) on your local machine to view the JSON output from the API.
 
 ## Pretext
